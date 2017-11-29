@@ -1,0 +1,24 @@
+{
+  "name": "mathrobot-raspberrypi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.2",
+    "node-tesseract": "^0.2.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PiGames/MathRobot-raspberrypi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PiGames/MathRobot-raspberrypi/issues"
+  },
+  "homepage": "https://github.com/PiGames/MathRobot-raspberrypi#readme"
+}
