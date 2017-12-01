@@ -2,6 +2,11 @@ const backend = require('socket.io-client').connect('https://mathrobot.herokuapp
 const app = require('express')();
 const http = require('http').Server(app);
 const socket = require('socket.io')(http);
+const NodeWebcam = require( "node-webcam" );
+const getDate = () => {
+  const d = new Date
+  return `${d.getHours()}-${d.getMinutes()}-${d.getSeconds()}_${d.getDate()}-${d.getMonth()}-${d.getFullYear()}`
+}
 
 let equation = []
 let currentProcessedCharacterIndex = -1
@@ -24,6 +29,7 @@ const eqationMap = require('./buttonsLocationMap.js')
 
 let arduino;
 
+
 io.on('connection', socket =>{
   arduino = socket
 
@@ -32,7 +38,9 @@ io.on('connection', socket =>{
   })
 
   arduino.on('end', resultImg => {
-    backend.emit('equation calculated', resultImg)
+      NodeWebcam.capture( `imgs/${getDate()}`, {callbackReturn: "base64"}, ( err, data ) =>
+        backend.emit('equation calculated', resultImg)
+      );
   })
 })
 
