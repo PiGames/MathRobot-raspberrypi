@@ -6,7 +6,8 @@
   "dependencies": {
     "express": "^4.16.2",
     "node-tesseract": "^0.2.7",
-    "node-webcam": "^0.4.3"
+    "node-webcam": "^0.4.3",
+    "socket.io": "^2.0.4"
   },
   "devDependencies": {},
   "scripts": {
