@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon --inspect src/index.js --exec babel-node",
-    "start": "babel-node src/index.js"
+    "start:dev": "PORT=4201 BACKEND_URL=http://localhost:4200 nodemon --inspect src/index.js --exec babel-node",
+    "start": "PORT=4201 BACKEND_URL=http://localhost:4200 babel-node src/index.js"
   },
   "author": "",
   "license": "ISC",

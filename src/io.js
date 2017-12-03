@@ -15,4 +15,4 @@ server.listen( port, () => {
 
 export const arduino = socket( server );
 
-export const backend = require( 'socket.io-client' ).connect( 'http://localhost:4200', { path: '/raspberry' } );
+export const backend = require( 'socket.io-client' ).connect( process.env.BACKEND_URL, { path: '/raspberry' } );
