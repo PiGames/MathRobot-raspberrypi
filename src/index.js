@@ -26,16 +26,20 @@ const createEquationQueue = () => {
 };
 
 const takePhoto = ( cb ) => {
-  NodeWebcam.capture( `imgs/${getDate()}`, { callbackReturn: 'base64', sleep: 20 }, ( err, data ) => {
-    console.log( data );
+  const filename = `imgs/${getDate()}`;
+  NodeWebcam.capture( filename, { callbackReturn: 'base64', sleep: 20 }, ( err, data ) => {
+    let image = data;
     if ( err ) {
-      console.error( err );
+      if ( !( err.message.indexOf( 'ENOENT: no such file or directory, open' ) >= 0 ) ) {
+        console.error( err );
+        return;
+      }
 
-      cb( img );
-      return;
+      image = img;
     }
 
-    cb( data );
+    console.log( 'Saved photo into', filename );
+    cb( image );
   } );
 };
 
@@ -62,11 +66,13 @@ arduino.on( 'connection', ( unoClient ) => {
   uno = unoClient;
 
   uno.on( 'clicked', () => {
+    console.log( 'Robot clicked on', equationQueue[ currentEquationStep ] );
     currentEquationStep++;
     if ( currentEquationStep < equationQueue.length ) {
       click();
     } else {
       takePhoto( ( img ) => {
+        console.log( 'Robot evaluated', currentEquation );
         backend.emit( 'robot done', { img } );
         currentEquation = null;
       } );
