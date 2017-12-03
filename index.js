@@ -33,7 +33,7 @@ backend.on('equation incoming', eq => {
 		backend.emit('error', 'Robot is already processing one equation')
 		return
 	}
-	equation = []
+	equation = eq
 	startProccesingEquation()
 })
 
@@ -46,34 +46,22 @@ io.on('connection', socket =>{
   arduino = socket
 
   arduino.on('clicked', ()=>{
-    // TODO uncomment and delete the copy from startProcessingEquation after setting up arduino
 
-    // if(currentProcessedCharacterIndex === equation.length - 1){
-    //   NodeWebcam.capture( `imgs/${getDate()}`, {callbackReturn: "base64", sleep: 20}, ( err, data ) =>{
-    //   if(err) {
-    //     console.log(err)
-    //     return
-    //   }
-    //   backend.emit('equation calculated', data)
-    // });
-    // }
+    if(currentProcessedCharacterIndex === equation.length - 1){
+      NodeWebcam.capture( `imgs/${getDate()}`, {callbackReturn: "base64", sleep: 20}, ( err, data ) =>{
+      if(err) {
+        console.log(err)
+        return
+      }
+      backend.emit('equation calculated', data)
+    });
+    }
     clickNext(arduino)
   })
 })
 
 
 function startProccesingEquation() {
-  if(currentProcessedCharacterIndex === equation.length - 1){
-    console.log('take a pic')
-    NodeWebcam.capture( `imgs/${getDate()}`, {callbackReturn: "base64", sleep: 20}, ( err, data ) =>{
-    if(err) {
-      console.log(err)
-      return
-    }
-    console.log('pic sent ')
-    backend.emit('equation calculated', data)
-  });
-  }
   if(!arduino) {
     console.log('arduino not connected')
     return;
