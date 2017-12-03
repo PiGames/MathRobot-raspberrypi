@@ -1,27 +1,27 @@
 {
-  "name": "mathrobot-raspberrypi",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {
-    "express": "^4.16.2",
-    "node-tesseract": "^0.2.7",
-    "node-webcam": "^0.4.3",
-    "socket.io": "^2.0.4"
-  },
-  "devDependencies": {},
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PiGames/MathRobot-raspberrypi.git"
+    "start:dev": "nodemon --inspect src/index.js --exec babel-node",
+    "start": "babel-node src/index.js"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/PiGames/MathRobot-raspberrypi/issues"
-  },
-  "homepage": "https://github.com/PiGames/MathRobot-raspberrypi#readme"
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^4.9.0",
+    "eslint-config-idiomatic": "^4.0.0",
+    "express": "^4.16.2",
+    "lodash": "^4.17.4",
+    "node-webcam": "^0.4.3",
+    "nodemon": "^1.12.1",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4",
+    "socket.io-redis": "^5.2.0"
+  }
 }
