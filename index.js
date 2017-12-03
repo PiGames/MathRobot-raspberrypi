@@ -1,7 +1,20 @@
 const backend = require('socket.io-client').connect('http://localhost:4200', {path:'/raspberry'})
-const app = require('express')();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+
+const express = require( 'express' );
+const app = express();
+const server = require( 'http' ).createServer( app );
+const io = require( 'socket.io' )( server );
+
+const port = process.env.PORT || 4201;
+
+server.listen( port, () => {
+  try {
+    console.clear();
+  } catch ( e ) {}
+
+  console.log( `Serving server on localhost:${port}` );
+} );
+
 const NodeWebcam = require( "node-webcam" );
 const getDate = () => {
   const d = new Date
@@ -15,7 +28,7 @@ backend.on('connect', () => {console.log('connected')});
 
 backend.on('equation incoming', eq => {
   console.log(eq, 'just got equation')
-  
+
 	if(equation) {
 		backend.emit('error', 'Robot is already processing one equation')
 		return
