@@ -1,6 +1,11 @@
-import { backend, arduino } from './io.js';
+const { JSDOM } = require( 'jsdom' );
+import { parser } from 'mathrobot-parser';
+
 import NodeWebcam from 'node-webcam';
+
+import { backend, arduino } from './io.js';
 import img from './img';
+import buttonsMap from './buttonsLocationMap.js';
 
 let currentEquation;
 let uno;
@@ -14,14 +19,40 @@ const getDate = () => {
 };
 
 const click = () => {
-  backend.emit( 'robot step', `Reaching to ${ equationQueueHumanReadable[ currentEquationStep ] }` );
+  backend.emit( 'robot step', equationQueueHumanReadable[ currentEquationStep ] );
   console.log( 'Emitted click on', equationQueue[ currentEquationStep ] );
   uno.emit( 'click', equationQueue[ currentEquationStep ] );
 };
 
 const createEquationQueue = () => {
-  equationQueue = [ { x: 0, y: 0 }, { x: 10, y: 10 } ];
-  equationQueueHumanReadable = [ '1', '2' ];
+  const { document } = ( new JSDOM( currentEquation ) ).window;
+  const mathml = document.querySelector( 'math' );
+  let parsed = false;
+  try {
+    parsed = parser( mathml );
+    console.log( parsed );
+  } catch ( e ) {
+    console.log( 'Parsing failed', e );
+  }
+
+  if ( !parsed ) {
+    return;
+  }
+
+  equationQueue = parsed.map( btn => buttonsMap[ btn.toString() ] );
+  equationQueueHumanReadable = parsed.map( btn => `Reaching to ”${btn.toString()}”` );
+
+  equationQueue = [
+    buttonsMap[ 'ac' ],
+    ...equationQueue,
+    buttonsMap[ '=' ],
+  ];
+
+  equationQueueHumanReadable = [
+    'Clearing...',
+    ...equationQueueHumanReadable,
+    'Reaching to ’=’',
+  ];
   currentEquationStep = 0;
 };
 
