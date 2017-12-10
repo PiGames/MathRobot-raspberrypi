@@ -1,4 +1,8 @@
 export default {
+  'camera': {
+    x: 100,
+    y: 0,
+  },
   'shift': {
     x: 0,
     y: 0,

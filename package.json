@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "PORT=4201 BACKEND_URL=http://localhost:4200 nodemon --inspect src/index.js --exec babel-node",
+    "start:dev": "PORT=4201 BACKEND_URL=http://localhost:4200 nodemon src/index.js --exec babel-node",
     "start": "PORT=4201 BACKEND_URL=ws://mathrobot.herokuapp.com babel-node src/index.js"
   },
   "author": "",
@@ -20,6 +20,7 @@
     "jsdom": "^11.5.1",
     "lodash": "^4.17.4",
     "mathrobot-parser": "git+https://git@github.com/PiGames/MathRobot-parser.git",
+    "node-cmd": "^3.0.0",
     "node-webcam": "^0.4.3",
     "nodemon": "^1.12.1",
     "socket.io": "^2.0.4",

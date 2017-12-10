@@ -2307,8 +2307,8 @@ map-stream@~0.1.0:
   resolved "https://registry.yarnpkg.com/map-stream/-/map-stream-0.1.0.tgz#e56aa94c4c8055a16404a0674b78f215f7c8e194"
 
 "mathrobot-parser@git+https://git@github.com/PiGames/MathRobot-parser.git":
-  version "1.1.0"
-  resolved "git+https://git@github.com/PiGames/MathRobot-parser.git#84220c9913228a9c87606669263495fb2f77fe8a"
+  version "1.1.1"
+  resolved "git+https://git@github.com/PiGames/MathRobot-parser.git#e762ea412cf89dddbbc3fe54fcebee9eae598e58"
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -2397,6 +2397,10 @@ natural-compare@^1.4.0:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
+
+node-cmd@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/node-cmd/-/node-cmd-3.0.0.tgz#38fff70a4aaa4f659d203eb57862737018e24f6f"
 
 node-pre-gyp@^0.6.36:
   version "0.6.38"

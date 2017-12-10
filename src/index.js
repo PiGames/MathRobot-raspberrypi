@@ -1,4 +1,5 @@
 const { JSDOM } = require( 'jsdom' );
+import cmd from 'node-cmd';
 import { parser } from 'mathrobot-parser';
 
 import NodeWebcam from 'node-webcam';
@@ -19,12 +20,14 @@ const getDate = () => {
 };
 
 const click = () => {
+  console.log( 'click' );
   backend.emit( 'robot step', equationQueueHumanReadable[ currentEquationStep ] );
   console.log( 'Emitted click on', equationQueue[ currentEquationStep ] );
   uno.emit( 'click', equationQueue[ currentEquationStep ] );
 };
 
 const createEquationQueue = () => {
+  console.log( 'create' );
   const { document } = ( new JSDOM( currentEquation ) ).window;
   const mathml = document.querySelector( 'math' );
   let parsed = false;
@@ -57,21 +60,13 @@ const createEquationQueue = () => {
 };
 
 const takePhoto = ( cb ) => {
-  const filename = `imgs/${getDate()}`;
-  NodeWebcam.capture( filename, { callbackReturn: 'base64', sleep: 20 }, ( err, data ) => {
-    let image = data;
-    if ( err ) {
-      if ( !( err.message.indexOf( 'ENOENT: no such file or directory, open' ) >= 0 ) ) {
-        console.error( err );
-        return;
-      }
-
-      image = img;
+  cmd.get(
+    'echo $(fswebcam -d /dev/video0 -F 5 --no-banner - | base64)',
+    function( err, data, stderr ) {
+      const img = `data:image/jpeg;base64,${data}`;
+      cb( img );
     }
-
-    console.log( 'Saved photo into', filename );
-    cb( image );
-  } );
+  );
 };
 
 backend.on( 'connect', () => {
@@ -102,11 +97,19 @@ arduino.on( 'connection', ( unoClient ) => {
     if ( currentEquationStep < equationQueue.length ) {
       click();
     } else {
-      takePhoto( ( img ) => {
-        console.log( 'Robot evaluated', currentEquation );
-        backend.emit( 'robot done', { img } );
-        currentEquation = null;
-      } );
+      uno.emit( 'take photo', buttonsMap[ 'camera' ] );
     }
+  } );
+
+  uno.on( 'photo taken', () => {
+    takePhoto( ( img ) => {
+      console.log( 'Robot evaluated', currentEquation );
+      backend.emit( 'robot done', { img } );
+      currentEquation = null;
+    } );
+  } );
+
+  uno.on( 'disconnect', () => {
+    backend.emit( 'arduino error' );
   } );
 } );
