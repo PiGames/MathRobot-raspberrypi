@@ -60,6 +60,7 @@ const createEquationQueue = () => {
 };
 
 const takePhoto = ( cb ) => {
+  backend.emit( 'robot step', 'taking photo' );
   cmd.get(
     'echo $(fswebcam -d /dev/video0 -F 5 --no-banner - | base64)',
     function( err, data, stderr ) {
@@ -74,9 +75,9 @@ backend.on( 'connect', () => {
 } );
 
 backend.on( 'evaluate equation', ( equation ) => {
-  if ( currentEquation ) {
-    return backend.emit( 'evaluate error', 'Robot is already processing an equation' );
-  }
+  // if ( currentEquation ) {
+  //   return backend.emit( 'evaluate error', 'Robot is already processing an equation' );
+  // }
 
   currentEquation = equation;
   console.log( 'Evaluating ', currentEquation );
