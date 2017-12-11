@@ -2,8 +2,6 @@ const { JSDOM } = require( 'jsdom' );
 import cmd from 'node-cmd';
 import { parser } from 'mathrobot-parser';
 
-import NodeWebcam from 'node-webcam';
-
 import { backend, arduino } from './io.js';
 import img from './img';
 import buttonsMap from './buttonsLocationMap.js';
@@ -75,7 +73,7 @@ const createEquationQueue = () => {
 const takePhoto = ( cb ) => {
   backend.emit( 'robot step', 'taking photo' );
   cmd.get(
-    'echo $(fswebcam -d /dev/video0 -F 5 --no-banner - | base64)',
+    'echo $(fswebcam -d /dev/video0 -F 20 --no-banner - | base64)',
     function( err, data, stderr ) {
       const img = `data:image/jpeg;base64,${data}`;
       cb( img );
