@@ -13,6 +13,7 @@ let uno;
 let equationQueue;
 let equationQueueHumanReadable;
 let currentEquationStep;
+let lastTimeClicked = Date.now();
 
 const getDate = () => {
   const d = new Date;
@@ -56,7 +57,10 @@ const createEquationQueue = () => {
     ...equationQueueHumanReadable,
     'Reaching to ’=’',
   ];
-  currentEquationStep = 0;
+
+  if ( lastTimeClicked + 10000 < Date.now() ) {
+    currentEquationStep = 0;
+  }
 };
 
 const takePhoto = ( cb ) => {
@@ -98,6 +102,7 @@ arduino.on( 'connection', ( unoClient ) => {
     if ( currentEquationStep < equationQueue.length ) {
       click();
     } else {
+      lastTimeClicked = Date.now();
       uno.emit( 'take photo', buttonsMap[ 'camera' ] );
     }
   } );

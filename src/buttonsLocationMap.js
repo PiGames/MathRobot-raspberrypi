@@ -3,6 +3,10 @@ export default {
     x: 100,
     y: 0,
   },
+  'on': {
+    x: 90,
+    y: 0,
+  },
   'shift': {
     x: 0,
     y: 0,
