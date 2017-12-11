@@ -54,7 +54,7 @@ const createEquationQueue = () => {
     'Reaching to ’=’',
   ];
 
-  if ( lastTimeClicked + 10000 < Date.now() ) {
+  if ( lastTimeClicked + 1000 * 60 * 5 < Date.now() ) {
     equationQueueHumanReadable = [
       'Turning calculator on',
       ...equationQueueHumanReadable,
@@ -77,6 +77,10 @@ const createEquationQueue = () => {
   }
 
   currentEquationStep = 0;
+};
+
+const turnOff = () => {
+
 };
 
 const takePhoto = ( cb ) => {
@@ -118,7 +122,6 @@ arduino.on( 'connection', ( unoClient ) => {
     if ( currentEquationStep < equationQueue.length ) {
       click();
     } else {
-      lastTimeClicked = Date.now();
       uno.emit( 'take photo', buttonsMap[ 'camera' ] );
     }
   } );
@@ -128,6 +131,8 @@ arduino.on( 'connection', ( unoClient ) => {
       console.log( 'Robot evaluated', currentEquation );
       backend.emit( 'robot done', { img } );
       currentEquation = null;
+
+      lastTimeClicked = Date.now();
     } );
   } );
 
