@@ -59,8 +59,17 @@ const createEquationQueue = () => {
   ];
 
   if ( lastTimeClicked + 10000 < Date.now() ) {
-    currentEquationStep = 0;
+    equationQueueHumanReadable = [
+      'Turning calculator on',
+      ...equationQueueHumanReadable,
+    ];
+
+    equationQueue = [
+      buttonsMap[ 'on' ],
+      ...equationQueue,
+    ];
   }
+  currentEquationStep = 0;
 };
 
 const takePhoto = ( cb ) => {
