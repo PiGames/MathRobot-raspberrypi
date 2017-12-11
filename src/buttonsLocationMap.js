@@ -95,7 +95,7 @@ export default {
     x: 95,
     y: 90,
   },
-  'div': {
+  'divide': {
     x: 90,
     y: 110,
   },
