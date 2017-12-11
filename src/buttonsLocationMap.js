@@ -4,7 +4,7 @@ export default {
     y: 0,
   },
   'on': {
-    x: 90,
+    x: 100,
     y: 0,
   },
   'shift': {

@@ -45,13 +45,11 @@ const createEquationQueue = () => {
   equationQueueHumanReadable = parsed.map( btn => `Reaching to ”${btn.toString()}”` );
 
   equationQueue = [
-    buttonsMap[ 'ac' ],
     ...equationQueue,
     buttonsMap[ '=' ],
   ];
 
   equationQueueHumanReadable = [
-    'Clearing...',
     ...equationQueueHumanReadable,
     'Reaching to ’=’',
   ];
@@ -66,7 +64,18 @@ const createEquationQueue = () => {
       buttonsMap[ 'on' ],
       ...equationQueue,
     ];
+  } else {
+    equationQueueHumanReadable = [
+      'Clearing...',
+      ...equationQueueHumanReadable,
+    ];
+
+    equationQueue = [
+      buttonsMap[ 'ac' ],
+      ...equationQueue,
+    ];
   }
+
   currentEquationStep = 0;
 };
 
