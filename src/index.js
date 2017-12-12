@@ -11,7 +11,7 @@ let uno;
 let equationQueue;
 let equationQueueHumanReadable;
 let currentEquationStep;
-let lastTimeClicked = Date.now();
+let lastTimeClicked = -1;
 let isArduinoDead = true;
 
 const getDate = () => {
