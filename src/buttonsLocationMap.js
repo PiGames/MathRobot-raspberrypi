@@ -4,8 +4,8 @@ export default {
     y: 0,
   },
   'on': {
-    x: 100,
-    y: 0,
+    x: 98,
+    y: 2,
   },
   'shift': {
     x: 0,
