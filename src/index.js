@@ -85,7 +85,7 @@ const turnOff = () => {
 };
 
 const takePhoto = ( cb ) => {
-  backend.emit( 'robot step', 'taking photo' );
+  backend.emit( 'robot step', 'Taking photo...' );
   cmd.get(
     'echo $(fswebcam -d /dev/video0 -F 20 --no-banner - | base64)',
     function( err, data, stderr ) {
