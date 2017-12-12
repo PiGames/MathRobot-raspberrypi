@@ -12,6 +12,7 @@ let equationQueue;
 let equationQueueHumanReadable;
 let currentEquationStep;
 let lastTimeClicked = Date.now();
+let isArduinoDead = true;
 
 const getDate = () => {
   const d = new Date;
@@ -96,6 +97,11 @@ const takePhoto = ( cb ) => {
 
 backend.on( 'connect', () => {
   console.log( 'Raspberry connected to backend' );
+  if ( isArduinoDead ) {
+    console.log( 'arduino is dead' );
+    isArduinoDead = true;
+    backend.emit( 'rpi is dead' );
+  }
 } );
 
 backend.on( 'evaluate equation', ( equation ) => {
@@ -113,6 +119,9 @@ backend.on( 'evaluate equation', ( equation ) => {
 } );
 
 arduino.on( 'connection', ( unoClient ) => {
+  isArduinoDead = false;
+  backend.emit( 'rpi is alive' );
+
   console.log( 'Arduino connected' );
   uno = unoClient;
 
@@ -138,5 +147,11 @@ arduino.on( 'connection', ( unoClient ) => {
 
   uno.on( 'disconnect', () => {
     backend.emit( 'arduino error' );
+
+    if ( Object.keys( arduino.sockets.clients().connected ).length === 0 ) {
+      console.log( 'arduino is dead' );
+      isArduinoDead = true;
+      backend.emit( 'rpi is dead' );
+    }
   } );
 } );
