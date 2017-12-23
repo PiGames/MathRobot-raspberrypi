@@ -16,7 +16,7 @@ export default {
     y: 0,
   },
   'left': {
-    x: 40,
+    x: 38,
     y: 10,
   },
   'right': {
